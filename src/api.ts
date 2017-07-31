@@ -63,4 +63,12 @@ export class Api {
         }
         return Api.exec(settings);
     }
+
+    public static storeSubscriberToken(token:string){
+        localStorage.setItem('chatgut.api.subscirber-token',token);
+    }
+
+    public static getSubscriberToken(){
+        return localStorage.getItem('chatgut.api.subscirber-token');
+    }
 }
