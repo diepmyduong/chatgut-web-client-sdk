@@ -6,7 +6,7 @@ declare var $:any;
 
 export class Api {
  
-    private static callback(settings:any){
+    public static exec(settings:any){
         return new Promise((resolve:any,reject:any)=>{
             try { 
                 $.ajax(settings).done((response:any) => {
@@ -35,11 +35,32 @@ export class Api {
             "url": URL.apiUrl("api/smsVerify"),
             "method": "POST",
             "headers": {
+                "access_token": Api.getAccessToken(),
                 "content-type": "application/json"
             },
             "processData": false,
             "data": JSON.stringify(data)
         }
-        return Api.callback(settings);
+        return Api.exec(settings);
+    }
+
+    public static refeshToken(){
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": URL.apiUrl("api/refeshToken",{access_token:Api.getAccessToken()}),
+            "method": "GET"
+        }
+        return Api.exec(settings);
+    }
+
+    public static getTokenInfo(){
+        var settings = {
+            "async": true,
+            "crossDomain": true,
+            "url": URL.apiUrl("api/info",{access_token:Api.getAccessToken()}),
+            "method": "GET"
+        }
+        return Api.exec(settings);
     }
 }
